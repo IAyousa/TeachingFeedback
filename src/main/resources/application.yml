@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+# false：挂载住院工具；true：仅测 RAG 时不挂工具
+app:
+  ai:
+    rag-test-mode: false
+    # RAG 启动灌库：默认按内容 SHA-256 增量；变更时先按 doc_key 删旧分片再写入，避免重复向量
+    rag-ingest:
+      enabled: true
+      doc-key: ${spring.ai.rag.doc-key}
+      force: false
+      # state-path:  # 可选；默认 java.io.tmpdir/teaching-feedback-rag/ingest-state.properties
+    # MessageWindowChatMemory 窗口大小（与是否 JDBC 无关）；持久化后仍生效
+    chat-memory:
+      max-messages: 20
+  # 浏览器跨域：前端与后端不同源时必配；生产请改为实际域名
+  cors:
+    allowed-origin-patterns:
+      - "http://localhost:*"
+      - "http://127.0.0.1:*"
+    allow-credentials: false
+    max-age: 3600
+
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/teaching_feedback?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false
+    username: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+  ai:
+    # 会话记忆落库：真实 MySQL 须 always；若改用 Flyway/Liquibase 管理表结构可改为 never
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+    dashscope:
+      api-key: ${spring.ai.dashscope.api-key}
+      chat:
+        options:
+          model: qwen-max
+    vectorstore:
+      qdrant:
+        host: localhost
+        port: 6334
+        collection-name: teaching_feedback
+        use-tls: false #是否使用TLS
+        initialize-schema: true #是否初始化schema
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.project.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.example.project.mapper: DEBUG
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
