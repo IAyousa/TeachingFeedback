@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.FeedbackMapper">
+    <select id="selectById" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE id = #{id}
+    </select>
+    <select id="selectByCourseAndDate" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE course_id = #{courseId} AND feedback_date = #{feedbackDate}
+        ORDER BY created_at
+    </select>
+    <select id="selectByCourseAndDateRange" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE course_id = #{courseId}
+          AND feedback_date >= #{startDate} AND feedback_date &lt;= #{endDate}
+        ORDER BY feedback_date, created_at
+    </select>
+    <select id="selectByStudentAndCourse" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE student_id = #{studentId} AND course_id = #{courseId}
+        ORDER BY feedback_date
+    </select>
+    <select id="selectByStudentId" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE student_id = #{studentId}
+        ORDER BY feedback_date
+    </select>
+    <select id="selectByCourseId" resultType="com.example.project.pojo.entity.Feedback">
+        SELECT id, course_id, student_id, feedback_date, dimension, score,
+               comment, is_analyzed, created_at
+        FROM feedback WHERE course_id = #{courseId}
+        ORDER BY feedback_date
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO feedback (course_id, student_id, feedback_date, dimension, score, comment)
+        VALUES (#{courseId}, #{studentId}, #{feedbackDate}, #{dimension}, #{score}, #{comment})
+    </insert>
+</mapper>

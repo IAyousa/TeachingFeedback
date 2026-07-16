@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.CourseMapper">
+    <select id="selectById" resultType="com.example.project.pojo.entity.Course">
+        SELECT id, dept_id, course_name, course_code, teacher_name, semester,
+               student_count, status, username, created_at, updated_at
+        FROM course WHERE id = #{id}
+    </select>
+    <select id="selectAll" resultType="com.example.project.pojo.entity.Course">
+        SELECT id, dept_id, course_name, course_code, teacher_name, semester,
+               student_count, status, username, created_at, updated_at
+        FROM course ORDER BY id
+    </select>
+    <select id="selectByDeptId" resultType="com.example.project.pojo.entity.Course">
+        SELECT id, dept_id, course_name, course_code, teacher_name, semester,
+               student_count, status, username, created_at, updated_at
+        FROM course WHERE dept_id = #{deptId} ORDER BY id
+    </select>
+    <select id="selectPasswordByUsername" resultType="java.lang.String">
+        SELECT password FROM course WHERE username = #{username} LIMIT 1
+    </select>
+    <select id="selectIdByUsername" resultType="java.lang.Long">
+        SELECT id FROM course WHERE username = #{username} LIMIT 1
+    </select>
+</mapper>

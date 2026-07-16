@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.EnrollmentMapper">
+    <select id="selectByStudentId" resultType="com.example.project.pojo.entity.Enrollment">
+        SELECT id, student_id, course_id, created_at FROM enrollment WHERE student_id = #{studentId}
+    </select>
+    <select id="selectByCourseId" resultType="com.example.project.pojo.entity.Enrollment">
+        SELECT id, student_id, course_id, created_at FROM enrollment WHERE course_id = #{courseId}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO enrollment (student_id, course_id) VALUES (#{studentId}, #{courseId})
+    </insert>
+    <delete id="delete">
+        DELETE FROM enrollment WHERE student_id = #{studentId} AND course_id = #{courseId}
+    </delete>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.TeacherMapper">
+    <select id="selectPasswordByUsername" resultType="java.lang.String">
+        SELECT password FROM teacher WHERE username = #{username} LIMIT 1
+    </select>
+    <select id="selectIdByUsername" resultType="java.lang.Long">
+        SELECT id FROM teacher WHERE username = #{username} LIMIT 1
+    </select>
+    <select id="selectAccountByUsername" resultType="java.util.Map">
+        SELECT id, username, full_name, phone FROM teacher WHERE username = #{username} LIMIT 1
+    </select>
+    <insert id="insertUser">
+        INSERT INTO teacher (username, password, full_name, phone) VALUES (#{username}, #{password}, '', '')
+    </insert>
+    <update id="updatePasswordHash">
+        UPDATE teacher SET password = #{password} WHERE username = #{username}
+    </update>
+    <delete id="deleteByUsername">
+        DELETE FROM teacher WHERE username = #{username}
+    </delete>
+</mapper>

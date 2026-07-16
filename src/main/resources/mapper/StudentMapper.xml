@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.StudentMapper">
+    <select id="selectPasswordByUsername" resultType="java.lang.String">
+        SELECT password FROM student WHERE username = #{username} LIMIT 1
+    </select>
+    <select id="selectIdByUsername" resultType="java.lang.Long">
+        SELECT id FROM student WHERE username = #{username} LIMIT 1
+    </select>
+    <select id="selectByStudentNo" resultType="com.example.project.pojo.entity.Student">
+        SELECT id, student_no, full_name, username, password, dept_id, created_at, updated_at
+        FROM student WHERE student_no = #{studentNo}
+    </select>
+    <select id="selectById" resultType="com.example.project.pojo.entity.Student">
+        SELECT id, student_no, full_name, username, password, dept_id, created_at, updated_at
+        FROM student WHERE id = #{id}
+    </select>
+    <update id="updateUsernameAndPassword">
+        UPDATE student SET username = #{username}, password = #{passwordHash}, updated_at = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+</mapper>

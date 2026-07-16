@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.SuggestionMapper">
+    <select id="selectById" resultType="com.example.project.pojo.entity.Suggestion">
+        SELECT id, course_id, suggestion_date, dimension, content, priority, generated_by, created_at
+        FROM suggestion WHERE id = #{id}
+    </select>
+    <select id="selectByCourseId" resultType="com.example.project.pojo.entity.Suggestion">
+        SELECT id, course_id, suggestion_date, dimension, content, priority, generated_by, created_at
+        FROM suggestion WHERE course_id = #{courseId}
+        ORDER BY suggestion_date DESC
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO suggestion (course_id, suggestion_date, dimension, content, priority, generated_by)
+        VALUES (#{courseId}, #{suggestionDate}, #{dimension}, #{content}, #{priority}, #{generatedBy})
+    </insert>
+</mapper>
