@@ -47,10 +47,6 @@ mysql -u root -p teaching_feedback < sql/seed_data.sql
 mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
-## 项目来源
-
-本项目从 SunnySide（住院陪护管理平台）改造而来，核心技术栈完全复用，业务层已全部重写为教学反馈领域。
-
 ## 模块划分
 
 | 模块 | 目录 | 职责 |
